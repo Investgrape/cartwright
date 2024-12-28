@@ -66,62 +66,27 @@ function App() {
       <div className="mt-3 flex gap-3">
         <button
           onClick={() => handleAnswer(question.id, 'yes')}
-          className={\`px-4 py-2 rounded-md transition-colors \${
+          className={`px-4 py-2 rounded-md transition-colors ${
             answers[question.id] === 'yes'
               ? 'bg-green-600 text-white'
               : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-          }\`}
+          }`}
         >
           Yes
         </button>
         <button
           onClick={() => handleAnswer(question.id, 'no')}
-          className={\`px-4 py-2 rounded-md transition-colors \${
+          className={`px-4 py-2 rounded-md transition-colors ${
             answers[question.id] === 'no'
               ? 'bg-red-600 text-white'
               : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-          }\`}
+          }`}
         >
           No
         </button>
       </div>
     </div>
   );
-
-  const renderResults = () => {
-    const results = calculateResults();
-    return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-4">Compliance Results</h2>
-        <div className="mb-6">
-          <div className="text-3xl font-bold text-gray-900">
-            {results.score.toFixed(1)}%
-          </div>
-          <div className="text-sm text-gray-500">Overall Compliance Score</div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-green-50 p-4 rounded-lg">
-            <div className="text-xl font-semibold text-green-700">
-              {results.compliant}
-            </div>
-            <div className="text-sm text-green-600">Compliant Items</div>
-          </div>
-          <div className="bg-red-50 p-4 rounded-lg">
-            <div className="text-xl font-semibold text-red-700">
-              {results.nonCompliant}
-            </div>
-            <div className="text-sm text-red-600">Non-Compliant Items</div>
-          </div>
-        </div>
-        <button
-          onClick={() => setShowResults(false)}
-          className="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          Review Answers
-        </button>
-      </div>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -131,7 +96,35 @@ function App() {
         </h1>
         
         {showResults ? (
-          renderResults()
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-2xl font-bold mb-4">Compliance Results</h2>
+            <div className="mb-6">
+              <div className="text-3xl font-bold text-gray-900">
+                {calculateResults().score.toFixed(1)}%
+              </div>
+              <div className="text-sm text-gray-500">Overall Compliance Score</div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="text-xl font-semibold text-green-700">
+                  {calculateResults().compliant}
+                </div>
+                <div className="text-sm text-green-600">Compliant Items</div>
+              </div>
+              <div className="bg-red-50 p-4 rounded-lg">
+                <div className="text-xl font-semibold text-red-700">
+                  {calculateResults().nonCompliant}
+                </div>
+                <div className="text-sm text-red-600">Non-Compliant Items</div>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowResults(false)}
+              className="mt-6 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Review Answers
+            </button>
+          </div>
         ) : (
           <div>
             {complianceQuestions.map(renderQuestion)}
